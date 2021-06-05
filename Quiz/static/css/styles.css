@@ -1,0 +1,76 @@
+body{
+    font-family: "Montserrat";
+  }
+h1,h2{
+font-family: 'Cormorant Garamond', serif;
+}
+h3{
+font-size: 20px;
+font-family: 'Times New Roman', Times, serif;
+font-weight: bold;
+}
+c{
+font-size: 16px;
+}
+.subheading{
+color: #777777;
+font-family: 'Sacramento', cursive;
+font-size: 28px;
+}
+.container-home{
+color: #8f8c8c;
+width: 55%;
+padding: 15px 15px 5px;
+margin: 120px auto 100px;
+display: inline-block;
+text-align: center;
+}
+.container{
+display: inline-block;
+width: 70%;
+padding: 15px 15px 5px;
+margin: auto 15%;
+text-align: center;
+}
+
+hr{
+border-top:  dotted #fff 1px;
+border-bottom: 0;
+}
+
+.bottom-container p,a{
+font-family: monospace;
+color: #fff;
+}
+.images{
+width: 40%;
+}
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {
+        height: 450px
+    }
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+        padding-top: 20px;
+        background-color: rgba(0,0,0,.03);
+        height: auto;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+        .sidenav {
+            height: auto;
+            padding: 15px;
+        }
+
+        .row.content {
+            height: auto;
+        }
+    }

@@ -1,0 +1,76 @@
+{% extends 'basic.html' %}
+{% block al1 %} active {% endblock %}
+{% block body %}
+
+    <div class="text-center">
+      <h1>Quizzes on Programming Languages</h1>
+      <p class="subheading">Want to test your knowledge of a specific language or topic?
+        Give this coding quizzes a try!</p> <br>
+      <hr>
+      <h2>Select the Language you want to test.</h2>
+      <div class="row mt-4">
+        <div class="col-lg-4 col-md-6 col-sm-6 ">
+          <div class="card">
+            <div class="card-header">
+              <img class="images" src="/static/images/c.png" alt="C Programming">
+            </div>
+            <div class="card-body">
+              <p class="advice"><strong>C Programming</strong></p>
+              <a href="/quiz/c" type="button" class="button btn btn-outline-dark" onclick="">Give Quiz</a>
+            </div>
+          </div>
+        </div>
+
+        <div class=" col-lg-4 col-md-6 col-sm-6 ">
+          <div class="card">
+            <div class="card-header">
+              <img class="images" src="/static/images/c++.png" alt="C++ Programming">
+            </div>
+            <div class="card-body">
+              <p class="advice"><strong>C++ Programming</strong></p>
+              <a href="/quiz/cpp" type="button" class="button btn btn-outline-dark" onclick="">Give Quiz</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6 ">
+          <div class="card">
+            <div class="card-header">
+              <img class="images" src="/static/images/java.png" alt="Java Programming">
+            </div>
+            <div class="card-body">
+              <p class="advice"><strong>Java Programming</strong></p>
+              <a href="/quiz/java" type="button" class="button btn btn-outline-dark" onclick="">Give Quiz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-4">
+        <div class="offset-lg-2 col-lg-4 col-md-6 col-sm-6  align-self-center">
+          <div class="card">
+            <div class="card-header">
+              <img class="images" src="/static/images/python.png" alt="Python Programming">
+            </div>
+            <div class="card-body">
+              <p class="advice"><strong>Python Programming</strong></p>
+              <a href="/quiz/python" type="button" class="button btn btn-outline-dark" onclick="">Give Quiz</a>
+            </div>
+          </div>
+        </div>
+
+        <div class=" col-lg-4 col-md-6 col-sm-6  align-self-center">
+          <div class="card">
+            <div class="card-header">
+              <img class="images" src="/static/images/javascript.png" alt="JS Programming">
+            </div>
+            <div class="card-body">
+              <p class="advice"><strong>Javascript Programming</strong></p>
+              <a href="/quiz/js" type="button" class="button btn btn-outline-dark" onclick="">Give Quiz</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

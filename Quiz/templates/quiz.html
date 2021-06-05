@@ -1,0 +1,164 @@
+{% extends 'basic.html' %}
+
+{% block body %}
+
+
+<h1 name="heaad" class="subheading text-center my-3" style = "font-size: 200%;">Test your knowledge of {{language}} fundamentals.</h1>
+<hr>
+<form action=""  class="quizForm" name="quizForm" onsubmit="submitAnswers()">
+{% for data in all_data %}
+<div class="container-fluid my-4">
+    <h3 class="qna" name="q{{forloop.counter}}">Q{{data.question}}</h3>
+    <input class="qna" type="radio" id="o{{forloop.counter}}{{o}}" name="q{{forloop.counter}}" value="{{o}}">
+    <label class="qna" id="op{{forloop.counter}}{{o}}" for="o{{forloop.counter}}{{o}}">{{data.option1|slice:"3:"}}</label><br>
+    
+    <input class="qna" type="radio" id="o{{forloop.counter}}{{o|add:"1"}}" name="q{{forloop.counter}}" value="{{o|add:"1"}}">
+    <label class="qna" id="op{{forloop.counter}}{{o|add:"1"}}" for="o{{forloop.counter}}{{o|add:"1"}}">{{data.option2|slice:"3:"}}</label><br>
+    
+    <input class="qna" type="radio" id="o{{forloop.counter}}{{o|add:"2"}}" name="q{{forloop.counter}}" value="{{o|add:"2"}}">
+    <label class="qna" id="op{{forloop.counter}}{{o|add:"2"}}" for="o{{forloop.counter}}{{o|add:"2"}}">{{data.option3|slice:"3:"}}</label><br>
+    
+    <input class="qna" type="radio" id="o{{forloop.counter}}{{o|add:"3"}}" name="q{{forloop.counter}}" value="{{o|add:"3"}}">
+    <label class="qna" id="op{{forloop.counter}}{{o|add:"3"}}" for="o{{forloop.counter}}{{o|add:"3"}}">{{data.option4|slice:"3:"}}</label><br>
+</div>
+{% endfor %}
+</form>
+{% if user.is_authenticated %}
+<div class="text-center mt-4 mb-2">
+    <input class="btn btn-outline-dark" type="submit" name="" value="Submit Answers" onclick="submitAnswers()">
+    <input class="btn btn-outline-dark" type="submit" name="" value="Home" onclick="home()">
+    <input class="btn btn-outline-dark" type="submit" name="" value="Show answers" onclick="showAnswers()">
+</div>
+<div id="showres" class="showres text-center my-2">
+</div>
+{% else %}
+<div class="text-center my-4">
+    <p class="text-danger "><strong>Message: </strong> Please Login/Signup to submit the test and check the answers.</p>
+    <input class="btn btn-outline-dark" type="submit" name="" value="Home" onclick="home()">
+</div>
+{% endif %}
+
+<script>
+    // var URL = "{% url 'index' %}";
+    var answers = JSON.parse("{{answers|escapejs}}");
+    var score = 0;
+    var ansCount = 0;
+    var q1Value = q2Value = q3Value = q4Value = q5Value = q6Value = q7Value = q8Value = q9Value = q10Value = 0; 
+    var name = "{{request.user|capfirst}}"
+    // console.log(answers);
+    function home(){
+        window.location = "/";
+    }
+
+// Submitting answers
+    function submitAnswers(){
+        for(j=1; j<=answers.length; j++){
+            for(i=1; i<=4; i++){
+                // console.log("o"+j+i);
+                if(document.getElementById("o"+j+i).checked == true){
+                    if(j==1){q1Value = document.getElementById("o"+j+i).value;}
+                    if(j==2){q2Value = document.getElementById("o"+j+i).value;}
+                    if(j==3){q3Value = document.getElementById("o"+j+i).value;}
+                    if(j==4){q4Value = document.getElementById("o"+j+i).value;}
+                    if(j==5){q5Value = document.getElementById("o"+j+i).value;}
+                    if(j==6){q6Value = document.getElementById("o"+j+i).value;}
+                    if(j==7){q7Value = document.getElementById("o"+j+i).value;}
+                    if(j==8){q8Value = document.getElementById("o"+j+i).value;}
+                    if(j==9){q9Value = document.getElementById("o"+j+i).value;}
+                    if(j==10){q10Value = document.getElementById("o"+j+i).value;}
+                    ansCount++;
+                }
+            
+            }   
+        }
+
+        if(q1Value == answers[0]){  score ++; }
+        if(q2Value == answers[1]){  score ++; }
+        if(q3Value == answers[2]){  score ++; }
+        if(q4Value == answers[3]){  score ++; }
+        if(q5Value == answers[4]){  score ++; }
+        if(q6Value == answers[5]){  score ++; }
+        if(q7Value == answers[6]){  score ++; }
+        if(q8Value == answers[7]){  score ++; }
+        if(q9Value == answers[8]){  score ++; }
+        if(q10Value == answers[9]){  score ++;}
+
+        if(ansCount >= 10){
+            if(score > 7){
+                compliment ="Outstanding! You are a Genius."
+            } else if(score > 5  ){
+                compliment = "Awesome! You need a bit of practice."
+            } else{
+                compliment = "Oops! You need to a lot of practice."
+            }
+            alert("Hi "+ name +"\nYour Score is " + score + " out of 10. \n" + compliment);
+            document.getElementById("showres").innerHTML=`
+            <button type="button" id="LoginOpen" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#ResultModal">
+                Show Result
+            </button>
+            <div class="modal fade" id="ResultModal" tabindex="-1" role="dialog" aria-labelledby="ResultModal" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="ResultModalTitle">Result of Quiz attempt</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                    <form action="" method="POST"> {%csrf_token %}
+                        <div class= "row text-center" >
+                            <label for="username" class = "col-sm-2 col-form-label">Username</label> 
+                            <div class="col-sm-10">
+                                <input type="text" class="d-inline form-control" id="username" name="username" value="{{request.user|capfirst}}" readonly>
+                            </div>
+                            <label for="Subject" class = "col-sm-2 col-form-label">subject</label> 
+                            <div class="col-sm-10">
+                                <input type="text" class="d-inline form-control" id="subject" name="subject" value="{{language}} Programming" readonly>
+                            </div>
+                            <label for="Score" class = "col-sm-2 col-form-label">score</label> 
+                            <div class="col-sm-10">
+                                <input type="text" class="d-inline form-control" id="score" name="score" value="`+score+`" readonly>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark my-2">Okay</button>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+            `
+        } else{
+            alert(`Please answer all questions to check result. \nYou answered ${ansCount} question.`);
+            score = 0; 
+            ansCount = 0;
+        }
+    }
+
+// Showing answers
+    function showAnswers(){
+        ansText = "Answers are: \n";
+        console.log(answers);
+        if(ansCount >= 10){
+            for(var k=1; k<= answers.length; k++){
+                var ans = answers[k-1]
+                for(var i=1; i<=answers.length; i++){
+                    if(k==i){
+                        for(var j=1; j<=4; j++){
+                            if(ans == j){
+                                // document.getElementById("o"+i+j).checked = true;
+                                document.getElementById("op"+i+j).style.textDecoration = "underline";
+                                document.getElementById("op"+i+j).style.fontWeight = "bold";
+                                document.getElementById("op"+i+j).style.fontFamily = "'Times New Roman', Times, serif" ; 
+                                document.getElementById("op"+i+j).style.fontSize = "115%";
+                            }
+                        }
+                    }
+                }
+            }
+        } else{
+            alert("Hi "+ name +",\nPlease Attempt all questions and submit it first.");
+        }
+    }
+</script>
+{% endblock %}
